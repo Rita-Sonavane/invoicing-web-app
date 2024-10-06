@@ -1,0 +1,98 @@
+<div class="sidebar" #sidebar>
+  <div class="logo-details">
+    <i class='bx bxl icon'></i>
+    <div class="logo_name">Logo</div>
+    <i class='bx bx-menu' id="btn"></i>
+  </div>
+  <ul class="nav-list">
+    <!-- <li>
+        <i class='bx bx-search'></i>
+        <input type="text" placeholder="Search...">
+        <span class="tooltip">Search</span>
+      </li> -->
+    <li>
+      <a routerLink="dashboard-home">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Dashboard</span>
+      </a>
+      <span class="tooltip">Dashboard</span>
+    </li>
+    <li>
+      <a routerLink="invoice">
+        <i class='bx bx-plus'></i>
+        <span class="links_name">Create</span>
+      </a>
+      <span class="tooltip">Create Invoices</span>
+    </li>
+    <li>
+      <a [routerLink]="['invoice/invoices-list']">
+        <i class='bx bx-file'></i>
+        <span class="links_name">Invoices</span>
+      </a>
+      <span class="tooltip">Invoices</span>
+    </li>
+    <li>
+      <a routerLink="customers">
+        <i class='bx bx-group'></i>
+        <span class="links_name">Customers</span>
+      </a>
+      <span class="tooltip">Customers</span>
+    </li>
+    <!-- <li>
+      <a routerLink="client-profile">
+        <i class='bx bx-cog'></i>
+        <span class="links_name">Setting</span>
+      </a>
+      <span class="tooltip">Setting</span>
+    </li> -->
+    <li *ngIf="isAdmin">
+      <a routerLink="/admin">
+        <i class='bx bx-home'></i>
+        <span class="links_name">Admin Pannel</span>
+      </a>
+      <span class="tooltip">Admin Pannnel</span>
+    </li>
+    <li class="profile" title="Logout">
+      <div class="profile-details">
+        <button class="logout-button" title="logout" (click)="onLogout()">
+          <i class='bx bx-export'></i>
+          <div class="name_job">
+            <div class="name">Logout</div>
+          </div>
+        </button>
+        <i class='bx bx-log-out' id="log_out"></i>
+      </div>
+      <span class="tooltip">Logout</span>
+    </li>
+  </ul>
+</div>
+
+<nav class="navbar">
+  <div class="nav-container">
+    <!-- <a routerLink="dashboard-home" class="nav-logo">Dashboard</a> -->
+    <a [routerLink]="currentRoute === 'Dashboard' ? 'dashboard-home' : null" class="nav-logo">{{ currentRoute }}</a>
+
+    <div class="nav-buttons">
+
+      <!-- <li class="nav-item" *ngIf="isAdmin"><a class="nav-logo" routerLink="admin">Admin Panel</a></li> -->
+
+      <li class="nav-item" *ngIf="currentUser" title="Profile">
+        <a routerLink="client-profile">
+          <div class="profile-initial">
+            <div class="avatar" id="profile-icon">{{ currentUser.name.charAt(0)}}</div>
+          </div>
+        </a>
+
+      </li>
+
+    </div>
+  </div>
+</nav>
+
+
+<!-- navbar -->
+<!-- <app-header></app-header> -->
+
+<div class="home-section">
+  <router-outlet></router-outlet>
+</div>

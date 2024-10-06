@@ -1,0 +1,248 @@
+<!-- settings -->
+<section class="hide-elements" style="flex-grow: 1;">
+  <h4 class="text-center">Invoice Settings</h4>
+  <table class="table text-center mt-2">
+    <tbody>
+
+      <tr style="display: flex;flex-direction: row;justify-content: center;">
+        <td></td>
+        <td>
+          <button class="button-follow follow btn-block " (click)="sendInvoice()">Send to Customer</button>
+        </td>
+        <td>
+          <button class="button-follow follow btn-block" (click)="generatePdf()">Download PDF</button>
+        </td>
+        <td>
+          <button class="button-follow follow btn-block " (click)="editInvoice()">Edit Invoice</button>
+        </td>
+        <td>
+          <button class="button-follow follow btn-block" data-bs-toggle="modal"
+            data-bs-target="#addCustomerModal">Record
+            Payment</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</section>
+
+
+<div class="flex-container" #invoiceContainer>
+
+
+  <!-- invoice generator -->
+  <section style="flex-grow: 4;">
+    <div class="container">
+
+      <div class="invoice" id="invoice-container">
+        <div class="row">
+          <div class="col-7">
+            <div data-editable="true"><strong>{{profile.name}}</strong></div>
+
+
+          </div>
+          <div class="col-5">
+            <h1 class="document-type display-4">
+              <div data-editable="true">INVOICE</div>
+            </h1>
+            <div class="text-end" data-editable="true">
+              <label for="invoce"><strong> NO:</strong></label>
+              <div>{{invoice.invoiceNumber}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-7">
+            <p>
+            <div data-editable="true">FROM
+
+              <div><strong>{{profile.email}}</strong></div>
+            </div><br>
+
+
+
+            <div data-editable="true">
+              BILL TO<br>
+
+              <strong>{{ invoice.client.name }}</strong> <br>
+              <strong> {{ invoice.client.email }}</strong> <br>
+              <strong> {{ invoice.client.phone }} </strong><br>
+              <strong>{{ invoice.client.address }}</strong>
+
+            </div>
+
+            <!-- </p> -->
+          </div>
+          <div class="col-5" style="text-align: right;">
+            <br><br><br>
+            <p>
+            <div data-editable="true">
+              <div>
+                <label>STATUS</label><br>
+                <strong><span>{{ invoice.status}}</span></strong>
+              </div>
+              <br>
+              <div>
+                <label>DATE</label> <br>
+                <strong><span>{{ invoice.createdAt |date }}</span></strong>
+
+              </div>
+              <br>
+              <div>
+                <label>DUE DATE</label><br>
+                <!-- <span>{{ invoiceForm.get('dueDate').value || calculateDueDate() | date }}</span> -->
+                <strong><span>{{ invoice.dueDate | date}}</span></strong>
+
+              </div>
+              <br>
+              <div>
+                <label>AMOUNT</label><br>
+                <strong> <span>{{invoice.currency}} &nbsp; {{invoice.total}}</span></strong>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <h6>
+          <div data-editable="true">Items</div>
+        </h6>
+        <br>
+        <table id="table" class="table table-striped">
+          <thead>
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Disc(%)</th>
+              <th>Amount</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of invoice.items; let i = index">
+              <td>{{item.itemName}}</td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.unitPrice}}</td>
+              <td>{{item.discount}}</td>
+              <td>{{item.amount}}</td>
+
+            </tr>
+          </tbody>
+
+        </table>
+
+
+        <div class="row">
+          <div class="col-8">
+          </div>
+          <div class="col-4">
+            <table class="table table-sm text-start">
+              <tbody>
+                <tr>
+                  <td class="invoice-summary"><strong>Invoice Summary</strong></td>
+                  <td class="invoice-summary"></td>
+                </tr>
+                <tr>
+                  <td><strong>Sub Total</strong></td>
+                  <td class="text-right" id="total-ht">{{ invoice.subTotal }}
+                    <!-- <span class="currency">{{ invoiceForm.get('currency')?.value }}</span> -->
+                  </td>
+                </tr>
+                <tr>
+                  <td>TVA(%)</td>
+                  <td class="text-right" id="total-tva">{{ invoice.vat }}
+                    <!-- <span class="currency">{{ invoiceForm.get('currency')?.value }}</span> -->
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong>Total</strong></td>
+                  <td class="text-right" id="total-ttc">{{ invoice.total }}
+                    <!-- <span  class="currency">{{ invoiceForm.get('currency')?.value }}</span> -->
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <p class="conditions">
+        <div data-editable="true">
+          <label><strong>Note/Payment Info</strong></label><br>
+          {{invoice.notes}}
+        </div>
+        <!-- </p> -->
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <p class="bottom-page text-right">
+        <div data-editable="true">
+
+        </div>
+
+        <!-- </p> -->
+      </div>
+    </div>
+  </section>
+
+
+
+
+  <!-- Update Invoice Form Modal -->
+  <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="addCustomerModalLabel">Record Payment</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="modal-body">
+          <form class="form" [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+            <div formGroupName="paymentRecords">
+              <div class="row mb-3">
+                <label for="datePaid" class="form-label">Date Paid</label>
+                <input type="date" class="form-control" formControlName="datePaid" [value]="today | date">
+              </div>
+              <div class="row mb-3">
+                <label for="amountPaid" class="form-label">Amount Paid</label>
+                <input type="number" class="form-control" formControlName="amountPaid" placeholder="0">
+              </div>
+              <div class="row mb-3">
+                <label for="paymentMethod" class="form-label">Payment Method</label>
+                <select class="form-control" formControlName="paymentMethod"
+                  style="border: 1px solid #666; padding: 10px;">
+                  <option value="">Select Payment Method</option>
+                  <option value="bank-transfer">Bank Transfer</option>
+                  <option value="cash">Cash</option>
+                  <option value="paypal">Paypal</option>
+                  <option value="other">Other</option>
+                </select>
+                <span class="focus"></span> <br>
+              </div>
+              <div class="row mb-3">
+                <label for="note" class="form-label">Note</label>
+                <input type="text" class="form-control" formControlName="note" placeholder="">
+              </div>
+              <button type="submit" class="button-follow follow w-100">Save Record</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+
+<div *ngIf="isLoading" class="spinner-overlay">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+</div>

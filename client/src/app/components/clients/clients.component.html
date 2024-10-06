@@ -1,0 +1,47 @@
+<!--MAIN-->
+<div class="table-wrapper">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Clients</h2>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="clients.length === 0" class="alert alert-info">
+        No Clients yet.
+    </div>
+
+    <table class="p-5" *ngIf="clients.length > 0">
+        <thead>
+            <tr class="text-center">
+                <th>No</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Business</th>
+                <th>Logo</th>
+                <th>Website</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let client of clients; let i = index">
+                <td data-label="ID">{{ i + 1 }}</td>
+                <td data-label="Name">{{ client.name }}</td>
+                <td data-label="Email">{{ client.email }}</td>
+                <td data-label="Phone">{{ client.phoneNumber }}</td>
+                <td data-label="Address">{{ client.contactAddress | slice:0:25 }}</td>
+                <td data-label="BusinessName">{{ client.businessName }}</td>
+                <td data-label="Logo"><img class="image" [src]="client.logo" alt="Logo" /></td>
+                <td data-label="Link"><a [href]="client.website" target="_blank"><i class="fa fa-link"></i></a></td>
+                <td data-label="Status" (click)="onSelectClient(client)"><span
+                        class="active p-3">View&nbsp;Customers</span></td>
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>

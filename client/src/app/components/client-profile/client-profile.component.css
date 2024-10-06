@@ -1,0 +1,355 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;700&display=swap'); */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  
+}
+
+
+
+.container{
+  /* display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 5px 30px;
+  border-radius: 5px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    flex-direction: column;
+    width: 100%;
+}
+
+
+.container .title {
+  font-size: 30px;
+  font-weight: 500;
+  position: relative;
+}
+
+
+/* Utilities */
+.card::after,
+.card img {
+  border-radius: 50%;
+}
+
+.card {
+  padding: 2rem 15rem;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, .5);
+  max-width: 500px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, .15);
+  margin: 1rem;
+  position: relative;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+}
+.card::before {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #FFF;
+  border-radius: 10px;
+  top: -.7rem;
+  left: -.7rem;
+}
+.card::after {
+  height: 15rem;
+  width: 15rem;
+  background-color: #4172f5aa;
+  top: -8rem;
+  right: -8rem;
+  box-shadow: 2rem 6rem 0 -3rem #FFF
+}
+
+.card img {
+  width: 8rem;
+  min-width: 80px;
+  box-shadow: 0 0 0 5px #FFF;
+}
+
+.infos {
+  margin-left: 1.5rem;
+}
+
+.name {
+  margin-bottom: 1rem;
+}
+.name h2 {
+  font-size: 1.3rem;
+}
+.name h4 {
+  font-size: .8rem;
+  color: #333
+}
+
+.text {
+  font-size: .9rem;
+  margin-bottom: 1rem;
+}
+
+
+
+.links button {
+  font-family: 'Poppins', sans-serif;
+  min-width: 120px;
+  padding: .5rem;
+  border: 1px solid #222;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all .25s linear;
+}
+.links .follow,
+.links .view:hover {
+  background-color: #222;
+  color: #FFF;
+}
+.links .view,
+.links .follow:hover{
+  background-color: transparent;
+  color: #222;
+}
+
+
+/*  */
+
+.stats {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  /* border: 1px solid #ddd; */
+  border-radius: 8px;
+  /* background-color: #f9f9f9; */
+}
+.stats h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+.stats p {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+  font-size:  20px;
+}
+.stats .icon {
+  margin-right: 10px;
+  font-size: 20px;
+  color: #333;
+}
+.stats a {
+  color: #007bff;
+  text-decoration: none;
+}
+.stats a:hover {
+  text-decoration: underline;
+}
+
+@media screen and (max-width: 450px) {
+  .card {
+    display: block;
+  }
+  .infos {
+    margin-left: 0;
+    margin-top: 1.5rem;
+  }
+  .links button {
+    min-width: 100px;
+  }
+}
+
+
+.main-dev{
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  padding: 10px;
+}
+
+
+
+
+:root {
+  --main-blue: #71b7e6;
+  --main-purple: #9b59b6;
+  --main-grey: #ccc;
+  --sub-grey: #d9d9d9;
+}
+/* container and form */
+
+.container-form {
+  max-width: 700px;
+  width: 100%;
+  background: #fff;
+  padding: 0px 30px;
+  border-radius: 5px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, .5);
+  /* max-width: 500px; */
+  box-shadow: 0 0 30px rgba(0, 0, 0, .15);
+  /* margin: 1rem; */
+
+}
+ .title {
+  font-size: 25px;
+  font-weight: 500;
+  position: relative;
+}
+
+.container-form .title::before {
+  content: "";
+  position: absolute;
+  height: 3.5px;
+  width: 30px;
+  background: linear-gradient(135deg, var(--main-blue), var(--main-purple));
+  left: 0;
+  bottom: 0;
+}
+
+.container-form form .user__details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin: 20px 0 12px 0;
+}
+/* inside the form user details */
+form .user__details .input__box {
+  width: calc(100% / 2 - 20px);
+  margin-bottom: 15px;
+}
+
+.user__details .input__box .details {
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
+}
+.user__details .input__box input {
+  height: 45px;
+  width: 100%;
+  /* outline: none;
+  border-radius: 5px;
+  border: 1px solid var(--main-grey); */
+  padding-left: 15px;
+  font-size: 16px;
+  border-bottom-width: 2px;
+  transition: all 0.3s ease;
+  border: 1px solid #d6d8e6;
+  border-radius: 4px;
+}
+
+input {
+  flex: 1;
+  padding: 13px;
+  border: 1px solid #d6d8e6;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: all 0.2s ease-out;
+  color: #000;
+}
+
+.user__details .input__box input:focus,
+.user__details .input__box input:valid {
+  border-color: var(--main-purple);
+}
+
+/* inside the form gender details */
+
+form .gender__details .gender__title {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+form .gender__details .category {
+  display: flex;
+  width: 80%;
+  margin: 15px 0;
+  justify-content: space-between;
+}
+
+.gender__details .category label {
+  display: flex;
+  align-items: center;
+}
+
+.gender__details .category .dot {
+  height: 18px;
+  width: 18px;
+  background: var(--sub-grey);
+  border-radius: 50%;
+  margin: 10px;
+  border: 5px solid transparent;
+  transition: all 0.3s ease;
+}
+
+#dot-1:checked ~ .category .one,
+#dot-2:checked ~ .category .two,
+#dot-3:checked ~ .category .three {
+  border-color: var(--sub-grey);
+  background: var(--main-purple);
+}
+
+form input[type="radio"] {
+  display: none;
+}
+
+/* submit button */
+form .button {
+  height: 45px;
+  margin: 45px 0;
+}
+
+form .button input {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  border-radius: 5px;
+  background: linear-gradient(135deg, var(--main-blue), var(--main-purple));
+  transition: all 0.3s ease;
+}
+
+form .button input:hover {
+  background: linear-gradient(-135deg, var(--main-blue), var(--main-purple));
+}
+
+@media only screen and (max-width: 584px) {
+  .container-form {
+    max-width: 100%;
+  }
+
+  form .user__details .input__box {
+    margin-bottom: 15px;
+    width: 100%;
+  }
+
+  form .gender__details .category {
+    width: 100%;
+  }
+
+  .container-form form .user__details {
+    max-height: 300px;
+    overflow-y: scroll;
+  }
+
+  .user__details::-webkit-scrollbar {
+    width: 0;
+  }
+}

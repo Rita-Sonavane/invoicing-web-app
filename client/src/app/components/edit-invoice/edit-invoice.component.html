@@ -1,0 +1,218 @@
+<div class="flex-container">
+
+    <!-- invoice generator -->
+    <section style="flex-grow: 4;" class="text-center">
+
+
+        <form [formGroup]="invoiceForm" (ngSubmit)="onInvoiceSubmit()">
+            <div class="container">
+
+                <div class="invoice" id="invoice-container">
+
+                    <div class="row">
+                        <div class="col-7">
+                            <!-- <img alt="Logo" id="uploadedLogo" src="https://fakeimg.pl/600x400?text=Logo" class="logo">
+              <form id="logoForm">
+                <input type="file" accept="image/*" id="logoInput" onchange="handleLogoChange()">
+              </form> -->
+
+                        </div>
+                        <div class="col-5">
+                            <h1 class="document-type display-4">
+                                <div data-editable="true">INVOICE</div>
+                            </h1>
+                            <div class="text-end" data-editable="true">
+                                <label for="invoce"><strong>Invoice #:</strong></label>
+                                <input type="number" name="invoiceNumber" id="invoiceNumber"
+                                    formControlName="invoiceNumber" style="border: none; width: 50px;" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7">
+                            <p>
+                            <div data-editable="true" class="text-start">BILL TO</div><br>
+                            <div data-editable="true" class="text-start">
+
+                                <div *ngIf="showDropdown">
+                                    <div class="select">
+                                        <select id="standard-select" (change)="onCustomerChange($event)"
+                                            class="form-control" style="border: 1px solid #666 ; padding: 10px;">
+                                            <option value="">Select Customer</option>
+                                            <option *ngFor="let customer of customers" [value]="customer._id">{{
+                                                customer.name }}</option>
+                                        </select>
+                                        <span class="focus"></span> <br>
+
+                                        <button class="btn btn-primary rounded-circle shadow mt-2" title="Add Customer"
+                                            data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+                                            <i class="bx bx-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="!showDropdown">
+                                    <div>
+                                        <strong>Name:</strong> {{ selectedCustomer?.name }} <br>
+                                        <strong>Email:</strong> {{ selectedCustomer?.email }} <br>
+                                        <strong>Phone Number:</strong> {{ selectedCustomer?.phone }} <br>
+                                        <strong>Address:</strong> {{ selectedCustomer?.address }}
+                                    </div>
+                                    <button type="button" class="btn btn-secondary mt-2"
+                                        (click)="toggleDropdown()">Change</button>
+                                </div>
+                                <!-- </form> -->
+                            </div>
+                        </div>
+                        <div class="col-5 " style="text-align: right;">
+                            <br>
+                            <p>
+                            <div data-editable="true">
+                                <div>
+                                    <label>STATUS</label><br>
+                                    <strong><span>{{ invoiceForm.get('type').value === 'Receipt' ? 'Paid' : 'Unpaid'
+                                            }}</span></strong>
+                                </div>
+                                <br>
+                                <div>
+                                    <label>DATE</label> <br>
+                                    <strong><span>{{ today | date }}</span></strong>
+
+                                </div>
+                                <br>
+                                <div>
+                                    <label>DUE DATE</label><br>
+                                    <!-- <span>{{ invoiceForm.get('dueDate').value || calculateDueDate() | date }}</span> -->
+                                    <strong><span>{{ invoiceForm.get('dueDate').value |date }}</span></strong>
+
+                                </div>
+                                <br>
+                                <div>
+                                    <label>AMOUNT</label><br>
+                                    <strong> <span>{{ invoiceForm.get('currency').value }} {{ total | number:'1.2-2'
+                                            }}</span></strong>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <h6>
+                        <div data-editable="true" class="text-start">Items
+                        </div>
+                    </h6>
+                    <br>
+                    <div class="text-start">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                    <th>Disc(%)</th>
+                                    <th>Amount</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody formArrayName="items">
+                                <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+                                    <td><input formControlName="itemName" type="text" /></td>
+                                    <td><input formControlName="quantity" type="number" (input)="calculateAmount(i)" />
+                                    </td>
+                                    <td><input formControlName="unitPrice" type="number" (input)="calculateAmount(i)" />
+                                    </td>
+                                    <td><input formControlName="discount" type="number" (input)="calculateAmount(i)" />
+                                    </td>
+                                    <td><input formControlName="amount" type="number" readonly /></td>
+                                    <td>
+                                        <button (click)="removeItem(i)" style="background: none;border: none;"><i
+                                                class="bx bx-trash" title="Delete" style="color: red;"
+                                                title="Delete"></i></button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary rounded-circle shadow mt-2" title="Add Row" (click)="addItem()">
+                            <i class="bx bx-plus"></i>
+                        </button>
+                    </div>
+
+
+
+                    <div class="row">
+                        <div class="col-8">
+                        </div>
+                        <div class="col-4">
+                            <table class="table table-sm text-start">
+                                <tbody>
+                                    <tr>
+                                        <td class="invoice-summary"><strong>Invoice Summary</strong></td>
+                                        <td class="invoice-summary"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Sub Total</strong></td>
+                                        <td class="text-right" id="total-ht">{{ subTotal | number:'1.2-2' }} <span
+                                                class="currency">{{ invoiceForm.get('currency')?.value }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TVA(%)</td>
+                                        <td class="text-right" id="total-tva">{{ vat | number:'1.2-2' }} <span
+                                                class="currency">{{ invoiceForm.get('currency')?.value }}</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total</strong></td>
+                                        <td class="text-right" id="total-ttc">{{ total | number:'1.2-2' }} <span
+                                                class="currency">{{ invoiceForm.get('currency')?.value }}</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                    <div data-editable="true" class="mid-section mt-5 text-start">
+                        <div>
+                            <label for="tax"><strong>Tax Rate (%)</strong></label><br>
+                            <input id="taxRate" formControlName="taxRate" type="number" placeholder="0"
+                                (input)="calculateTotal()" />
+                        </div>
+                        <div>
+                            <label for="Due Date"><strong>Due Date</strong></label><br>
+                            <input id="dueDate" formControlName="dueDate" type="date" />
+                        </div>
+                        <div>
+                            <label for="currency"><strong>Select Currency</strong></label><br>
+                            <select id="currency" formControlName="currency" (change)="calculateTotal()">
+                                <option value="">Select Currency</option>
+                                <option *ngFor="let currency of currencies" [value]="currency.value">{{ currency.label
+                                    }}</option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+
+
+                    <div class="text-start">
+                        <label><strong>Note/Payment Info</strong></label>
+                        <textarea name="notes" id="" formControlName="notes"
+                            placeholder="Provide additional details or terms of service"></textarea>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="follow button-follow my-3 " [disabled]="invoiceForm.invalid">Save and
+                Continue</button>
+        </form>
+    </section>
+
+
+    <!-- Add Customer Form Modal -->
+    <app-customer-form></app-customer-form>
+
+</div>

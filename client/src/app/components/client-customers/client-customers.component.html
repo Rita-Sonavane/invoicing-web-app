@@ -1,0 +1,44 @@
+<!--MAIN-->
+<div class="table-wrapper">
+    <div class="table-title">
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Customers list of :  {{selectedClient.name}}.</h2>
+            </div>
+
+        </div>
+    </div>
+    <div *ngIf="customers.length === 0" class="alert alert-info">
+        No Clients yet.
+    </div>
+
+    <table class="p-5 table table-striped table-hover" *ngIf="customers.length > 0">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr *ngFor="let customer of customers; let i = index" title="select client">
+                <td data-label="ID">{{ i + 1 }}</td>
+                <td data-label="Name">{{ customer.name }}</td>
+                <td data-label="Email">{{ customer.email }}</td>
+                <td data-label="Phone">{{ customer.phone }}</td>
+                <td data-label="Address">{{ customer.address | slice:0:25 }}</td>
+                <td data-label="Status" (click)="onSelectCustomer(customer)"><span class="active p-2">View&nbsp;Invoices</span></td>
+                <!-- <td data-label="BusinessName">{{ client.businessName }}</td>
+                <td data-label="Logo"><img  class="image" [src]="client.logo" alt="Logo" /></td>
+                <td data-label="Link"><a [href]="" target="_blank"><i class="fa fa-link"></i></a></td> -->
+            </tr>
+
+        
+        </tbody>
+    </table>
+
+</div>

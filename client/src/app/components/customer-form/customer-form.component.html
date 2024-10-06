@@ -1,0 +1,143 @@
+<!-- Add Customer Form Modal -->
+<div class="modal fade" id="addCustomerModal" tabindex="-1" aria-labelledby="addCustomerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="addCustomerModalLabel">Edit Customer</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="container-form">
+                <!-- <div class="title text-center mt-3">Edit Profile</div> -->
+                <form class="form" [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+                    <div class="user__details">
+
+                        <div class="input__box">
+                            <label for="name" class="form-label details">Customer Name</label>
+                            <input type="text" class="form-control" formControlName="name" placeholder="John Doe">
+                            <div *ngIf="customerForm.get('name').touched && customerForm.get('name').invalid"
+                                class="text-danger">
+                                Name is required
+                            </div>
+                        </div>
+
+                        <div class="input__box">
+                            <label for="email" class="form-label details">Email</label>
+                            <input type="email" class="form-control" formControlName="email"
+                                placeholder="email@example.com">
+                            <div *ngIf="customerForm.get('email').touched && customerForm.get('email').invalid"
+                                class="text-danger">
+                                Valid email is required
+                            </div>
+                        </div>
+
+                        <div class="input__box">
+                            <label for="building" class="form-label details">Building/Unit #</label>
+                            <input type=" text" id="building" class="form-control" formControlName="building"
+                                placeholder="Enter Building/Unit #" />
+                            <!-- <div *ngIf="customerForm.get('building').touched && customerForm.get('building').invalid"
+                                class="text-danger">
+                                Name is required
+                            </div> -->
+                        </div>
+
+                        <div class="input__box">
+                            <label for="addressLine1" class="form-label details">Address Line 1</label>
+                            <input type="text" id="addressLine1" class="form-control" formControlName="addressLine1"
+                                placeholder="Enter Address Line 1" />
+                            <!-- <div *ngIf="customerForm.get('addressLine1').touched && customerForm.get('addressLine1').invalid"
+                                class="text-danger">
+                                Name is required
+                            </div> -->
+                        </div>
+
+                        <div class="input__box">
+                            <label for="city" class="form-label details">City</label>
+                            <input type="text" id="city" class="form-control" formControlName="city"
+                                placeholder="Enter City" />
+                            <div *ngIf="customerForm.get('city').touched && customerForm.get('city').invalid"
+                                class="text-danger">
+                                City is required
+                            </div>
+                        </div>
+
+                        <div class="input__box">
+                            <label for="state" class="form-label details">State/Province</label>
+                            <input type=" text" id="state" class="form-control" formControlName="state"
+                                placeholder="Enter State/Province" />
+                            <div *ngIf="customerForm.get('state').touched && customerForm.get('state').invalid"
+                                class="text-danger">
+                                State/Province is required
+                            </div>
+                        </div>
+
+                        <div class="input__box">
+                            <label for="countryCode" class="form-label details">Country Code</label>
+                            <input type="text" formControlName="countryCode" id="countryCode" class="form-control"
+                                placeholder="+1" (input)="onCountryCodeChange($event)" />
+                        </div>
+
+                        <div class="input__box">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" id="country" class="form-control" formControlName="country"
+                                placeholder="Enter Country" />
+                            <div *ngIf="customerForm.get('country').touched && customerForm.get('country').invalid"
+                                class="text-danger">
+                                Country is required
+                            </div>
+                        </div>
+
+                        <div class="input__box">
+                            <label for="phone" class="form-label">Phone</label>
+                            <input type="text" class="form-control" formControlName="phone" placeholder="xxxxxxxxxx">
+                            <div *ngIf="customerForm.get('phone').touched && customerForm.get('phone').invalid"
+                                class="text-danger">
+                                Valid phone number is required
+                            </div>
+                        </div>
+
+                        <div class="input__box">
+                            <label for="mobile" class="form-label">Mobile</label>
+                            <input type="text" class="form-control" formControlName="mobile" placeholder="xxxxxxxxxx">
+                            <div *ngIf="customerForm.get('mobile').touched && customerForm.get('mobile').invalid"
+                                class="text-danger">
+                                Valid phone number is required
+                            </div>
+                        </div>
+
+                        <div class="input__box">
+                            <label for="fax" class="form-label">Fax</label>
+                            <input type="text" class="form-control" formControlName="fax" placeholder="xxxxxxxxxx">
+                            <div *ngIf="customerForm.get('fax').touched && customerForm.get('fax').invalid"
+                                class="text-danger">
+                                <div *ngIf="customerForm.get('fax').errors?.required">Fax number is required.</div>
+                                <div *ngIf="customerForm.get('fax').errors?.pattern">Fax number must be in a valid
+                                    format. It should start with an optional `+` followed by at least 7 digits.</div>
+                            </div>
+                        </div>
+
+                        <div class="input__box">
+                            <label for="postalCode" class="form-label">Postal Code</label>
+                            <input type="text" id="postalCode" class="form-control" formControlName="postalCode"
+                                placeholder="Enter Postal Code" />
+                            <div *ngIf="customerForm.get('postalCode').touched && customerForm.get('postalCode').invalid"
+                                class="text-danger">
+                                <div *ngIf="customerForm.get('postalCode').errors?.required">Postal code is required.
+                                </div>
+                                <div *ngIf="customerForm.get('postalCode').errors?.pattern">Postal code must be in a
+                                    valid format. It can include alphanumeric characters, hyphens, and spaces.</div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="links">
+                        <button type="submit" class="follow mb-3 mx-2" [disabled]="customerForm.invalid">Save
+                            Customer</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>

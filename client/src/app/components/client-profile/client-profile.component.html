@@ -1,0 +1,119 @@
+<div class="title text-center" *ngIf="!showForm">Profile</div>
+<div class="main-dev">
+
+  <!-- Conditionally display the card container -->
+  <div class="card" *ngIf="!showForm">
+    <div class="img">
+      <img [src]="profile.logo">
+    </div>
+    <div class="infos">
+
+      <div class="stats">
+        <h2 class="name">{{ profile.name }}</h2>
+        <p><i class='icon bx bx-envelope'></i> {{ profile.email }}</p>
+        <p><i class='icon bx bx-phone'></i> {{ profile.phoneNumber }}</p>
+        <p><i class='icon bx bx-briefcase'></i> {{ profile.businessName }}</p>
+        <p><i class='icon bx bx-map'></i> {{ profile.contactAddress }}</p>
+        <p><i class='icon bx bx-globe'></i> <a [href]="profile.website">{{ profile.website }}</a></p>
+
+      </div>
+      <div class="links ">
+        <button class="follow " (click)="onEditProfile(profile)">Edit Profile</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="main-dev" *ngIf="showForm">
+  <div class="container-form">
+    <div class="title text-center mt-3">Edit Profile</div>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+      <div class="user__details">
+
+        <div class="input__box">
+          <span class="details">Full Name</span>
+          <input type="text" id="name" formControlName="name" class="form-control">
+          <div *ngIf="profileForm.get('name')?.touched && profileForm.get('name')?.invalid" class="text-danger">
+            <div *ngIf="profileForm.get('name')?.errors?.['required']">Name is required.</div>
+          </div>
+        </div>
+
+        <div class="input__box">
+          <span class="details">Email</span>
+          <input type="email" id="email" formControlName="email" class="form-control">
+          <div *ngIf="profileForm.get('email')?.touched && profileForm.get('email')?.invalid" class="text-danger">
+            <div *ngIf="profileForm.get('email')?.errors?.['required']">Email is required.</div>
+          </div>
+        </div>
+
+        <div class="input__box">
+          <span class="details">Phone Number</span>
+          <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control">
+          <div *ngIf="profileForm.get('phoneNumber')?.touched && profileForm.get('phoneNumber')?.invalid"
+            class="text-danger">
+            <div *ngIf="profileForm.get('phoneNumber')?.errors?.['required']">Valid Phone Number is required.</div>
+          </div>
+        </div>
+
+        <div class="input__box">
+          <span class="details">Business Name</span>
+          <input type="text" id="businessName" formControlName="businessName" class="form-control">
+          <div *ngIf="profileForm.get('businessName')?.touched && profileForm.get('businessName')?.invalid"
+            class="text-danger">
+            <div *ngIf="profileForm.get('businessName')?.errors?.['required']">Business Name is required.</div>
+          </div>
+        </div>
+
+        <div class="input__box">
+          <span class="details">Address</span>
+          <input type="text" id="contactAddress" formControlName="contactAddress" class="form-control">
+          <div *ngIf="profileForm.get('contactAddress')?.touched && profileForm.get('contactAddress')?.invalid"
+            class="text-danger">
+            <div *ngIf="profileForm.get('contactAddress')?.errors?.['required']">Address is required.</div>
+          </div>
+        </div>
+
+        <div class="input__box">
+          <span class="details">Logo URL</span>
+          <input type="text" id="logo" formControlName="logo" class="form-control">
+          <div *ngIf="profileForm.get('logo')?.touched && profileForm.get('logo')?.invalid" class="text-danger">
+            <div *ngIf="profileForm.get('logo')?.errors?.['required']">Logo is required.</div>
+          </div>
+        </div>
+
+        <div class="input__box">
+          <span class="details">Website</span>
+          <input type="text" id="website" formControlName="website" class="form-control">
+          <div *ngIf="profileForm.get('logo')?.touched && profileForm.get('logo')?.invalid" class="text-danger">
+            <div *ngIf="profileForm.get('logo')?.errors?.['required']">Logo is required.</div>
+          </div>
+        </div>
+
+
+        <div class="input__box">
+          <label for="fax" class="form-label">Fax</label>
+          <input type="text" class="form-control" formControlName="fax" placeholder="xxxxxxxxxx">
+          <div *ngIf="profileForm.get('fax')?.touched && profileForm.get('fax')?.invalid" class="text-danger">
+            <div *ngIf="profileForm.get('fax')?.errors?.['required']">Fax number is required.</div>
+            <div *ngIf="profileForm.get('fax')?.errors?.['pattern']">Fax number must be in a valid
+              format. It should start with an optional `+` followed by at least 7 digits.</div>
+          </div>
+        </div>
+
+
+        <!-- <div class="mb-3">
+          <label for="image" class="form-label">Profile Image</label>
+          <input type="file" id="image" (change)="onFileChange($event)" class="form-control">
+        </div> -->
+      </div>
+
+      <div class="links">
+        <button type="submit" class="follow mb-3 mx-2">{{isEditMode ? 'Update' :
+          'Create'}} Profile</button>
+        <button class="view mb-3" (click)="onBack()">Back</button>
+      </div>
+    </form>
+  </div>
+</div>

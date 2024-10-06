@@ -1,0 +1,60 @@
+<div class="container mt-5">
+    <div class="container">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h2>Customers</h2>
+                    </div>
+
+                </div>
+            </div>
+            <div *ngIf="customers.length === 0" class="alert alert-info">
+                Select client first, No customer yet.
+            </div>
+
+            <table class="table table-striped table-hover" *ngIf="customers.length > 0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let customer of customers; let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ customer.name }}</td>
+                        <td>{{ customer.email }}</td>
+                        <td>{{ customer.phone }}</td>
+                        <td>{{ customer.address | slice:0:25 }}</td>
+                        <td class="actions d-flex">
+                            <button (click)="editCustomer(customer)" data-bs-toggle="modal"
+                                data-bs-target="#addCustomerModal"><i class="bx bx-edit" title="Edit"
+                                    style=" color: #FFC107;"></i></button>
+                            <button (click)="confirmDelete(customer)"><i class="bx bx-trash" title="Delete"
+                                    style="color: red;" title="Delete"></i></button>
+
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+
+    <!-- Add Customer Button -->
+    <button class="btn btn-primary rounded-circle shadow" title="Add Customer"
+        style="position: fixed; bottom: 20px; right: 20px;cursor: pointer;" data-bs-toggle="modal"
+        data-bs-target="#addCustomerModal">
+        <i class="bx bx-plus"></i>
+    </button>
+
+    <!-- Add Customer Form Modal -->
+    <app-customer-form (customerAdded)="onCustomerAdded()"></app-customer-form>
+
+</div>
