@@ -34,6 +34,19 @@ export class LoginComponent implements OnInit, AfterViewInit {
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private profileService: ProfileService, private route: ActivatedRoute, private store: Store<{ currentClinet: any }>) { }
 
   ngOnInit(): void {
+
+    const token = this.authService.getToken();
+    const user = this.authService.getCurrentUser();
+
+    if (token && user) {
+      console.log("From App Component:", { token, user });
+      this.router.navigate(['/dashboard']);
+    } else {
+      console.log("No token or user found in localStorage");
+    }
+
+
+
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
